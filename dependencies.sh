@@ -51,12 +51,18 @@ if [ "x${HAVE_PCRE2}" = "xno" ]; then
   # Prepare pcre2-10.23 source:
   (mkdir -p "${WORKDIR}/thirdparty/" && \
     cd "${WORKDIR}/thirdparty" && \
-    wget "ftp://ftp.pcre.org/pub/pcre/pcre2-10.23.zip"
-    echo "56c07f59ccd052ccdbdedadf24574a63  pcre2-10.23.zip" | md5sum -c || exit 1
-    unzip "pcre2-10.23.zip" && \
-    cd "pcre2-10.23" && \
+    #wget "ftp://ftp.pcre.org/pub/pcre/pcre2-10.23.zip"
+    wget "https://ftp.exim.org/pub/pcre/pcre2-10.23.tar.bz2"
+    echo "b2cd00ca7e24049040099b0a46bb3649  pcre2-10.23.zip" | md5sum -c || exit 1
+    tar -xjf pcre2-10.23.tar.bz2 && \
+    cd pcre2-10.23/ && \
     patch -p1 < "${SCRIPTPATH}/thirdparty/pcre2.patch" && \
     autoreconf -fi ) || exit 1
+    
+    #unzip "pcre2-10.23.zip" && \
+    #cd "pcre2-10.23" && \
+    #patch -p1 < "${SCRIPTPATH}/thirdparty/pcre2.patch" && \
+    #autoreconf -fi ) || exit 1
   # Build pcre2-10.23:
   mkdir -p "${WORKDIR}/thirdparty/build_pcre2" || exit 1
   cd "${WORKDIR}/thirdparty/build_pcre2" || exit 1
